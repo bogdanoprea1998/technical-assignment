@@ -1,6 +1,7 @@
 import { StarIcon } from "@heroicons/react/24/outline";
 import { YoutubeIframe } from "./youtubeIframe";
 import { fetchMovies, fetchTrailerByMovieId } from "../utils/data";
+import Link from "next/link";
 
 export default async function Highlight() {
   const trendingMovies = await fetchMovies(1);
@@ -11,6 +12,7 @@ export default async function Highlight() {
   return (
     <aside className="relative container overflow-hidden gap-48 min-w-full h-30vh sm:h-40vw bg-gradient-to-t from-black to-transparent">
       <YoutubeIframe
+        isHighlight={true}
         className="absolute w-full h-full -top-10 sm:-top-36 -z-10 sm:h-56vw overflow-hidden"
         videoId={trailerKey}
       />
@@ -26,9 +28,12 @@ export default async function Highlight() {
             {topTrendyMovie.overview &&
               topTrendyMovie.overview.slice(0, 200) + "..."}
           </h3>
-          <button className="mt-2 py-1 border-2 rounded-full max-w-32 mx-auto px-5 sm:mx-0 sm:px-0">
-            Play trailer
-          </button>
+          <Link
+            href={`/movie/${topTrendyMovie.id}`}
+            className="mt-2 py-1 border-2 rounded-full max-w-40 mx-auto px-5 sm:mx-0 sm:px-0 text-center hover:text-black hover:bg-white"
+          >
+            Learn more
+          </Link>
         </div>
       </div>
     </aside>

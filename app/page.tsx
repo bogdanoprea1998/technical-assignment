@@ -1,6 +1,5 @@
 import Category from "./components/category";
 import Highlight from "./components/highlight";
-import { fetchMovies } from "./utils/data";
 
 export default function Home() {
   return (

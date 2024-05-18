@@ -6,7 +6,7 @@ export const Card = ({ props }: { props: any }) => {
   const imageUrl = `${tmdb_images_base_url}/w300${poster_path}`;
   return (
     <Link
-      href="/"
+      href={`/movie/${id}`}
       className="group flex flex-col rounded-lg relative overflow-hidden aspect-2/3 min-w-40 sm:min-w-60 my-4"
     >
       <img className="absolute -z-10" src={imageUrl} alt={title} />

@@ -21,7 +21,7 @@ export const fetchMovies = async (page: number) => {
   return response;
 };
 
-export const fetchMovieById = async (movieId: number) => {
+export const fetchMovieById = async (movieId: string) => {
   const url = `${tmdb_base_url}/movie/${movieId}?api_key=${api_key}&language=en-US`;
 
   const response = await fetch(url, getOptions)
@@ -31,7 +31,7 @@ export const fetchMovieById = async (movieId: number) => {
   return response;
 };
 
-export const fetchTrailerByMovieId = async (movieId: number) => {
+export const fetchTrailerByMovieId = async (movieId: string) => {
   const url = `${tmdb_base_url}/movie/${movieId}/videos?api_key=${api_key}&language=en-US`;
 
   const response = await fetch(url, getOptions)
