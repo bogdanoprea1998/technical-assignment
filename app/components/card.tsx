@@ -7,7 +7,7 @@ export const Card = ({ props }: { props: any }) => {
   return (
     <Link
       href="/"
-      className="group flex flex-col rounded-lg relative overflow-hidden aspect-2/3 min-w-60 my-4"
+      className="group flex flex-col rounded-lg relative overflow-hidden aspect-2/3 min-w-40 sm:min-w-60 my-4"
     >
       <img className="absolute -z-10" src={imageUrl} alt={title} />
       <div className="p-3 z-10 flex-col justify-between min-h-full hidden group-hover:flex group-hover: bg-gray-900 group-hover: bg-opacity-70">
