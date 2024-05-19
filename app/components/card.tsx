@@ -27,9 +27,11 @@ export const Card = ({
           {overview && overview.slice(0, 120) + "..."}
         </p>
       </div>
-      <h2 className="lg:hidden self-center text-md px-3 py-2 max-w-full h-full bg-gradient-to-t">
-        {title}
-      </h2>
+      <div className="lg:hidden flex flex-col-reverse self-center text-md min-w-full h-full">
+        <h2 className="font-bold bg-opacity- px-2 text-center pb-4 pt-7 bg-gradient-to-t from-black">
+          {title}
+        </h2>
+      </div>
     </Link>
   );
 };
