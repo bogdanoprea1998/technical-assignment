@@ -7,11 +7,14 @@ export default function Page({
   searchParams?: { query?: string; page?: string };
 }) {
   const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
 
   return (
     <main className="flex flex-col items-center justify-between">
-      <SearchBar className="w-full h-12 px-5 text-black outline-none sm:hidden" />
-      <SearchResults query={query} currentPage={1} />
+      <div className="sm:hidden w-full">
+        <SearchBar className="w-full h-12 px-5 text-black outline-none" />
+      </div>
+      <SearchResults query={query} currentPage={currentPage} />
     </main>
   );
 }

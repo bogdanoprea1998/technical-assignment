@@ -19,10 +19,7 @@ export default function SearchBar({
   const hasSearchParams = searchParams.get("query");
 
   useEffect(() => {
-    console.log(pathname);
-    console.log(searchParams);
     if (!hasSearchParams && pathname !== "/search") {
-      console.log("FROM HERE");
       clearSearch();
     }
   }, [pathname]);

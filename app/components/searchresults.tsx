@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { fetchMoviesByQuery } from "../utils/data";
 import { Card } from "./card";
+import Pagination from "./pagination";
 
 export default async function SearchResults({
   query,
@@ -11,12 +12,18 @@ export default async function SearchResults({
 }) {
   const moviesList = await fetchMoviesByQuery(query, currentPage);
   const hasMovies = moviesList.results.length > 0;
+  const maxPages = moviesList.total_pages > 500 ? 500 : moviesList.total_pages;
   return (
     <section className="flex flex-row py-5 px-5 gap-x-10 gap-y-5 max-w-full flex-wrap justify-center sm:gap-x-5">
       {hasMovies ? (
-        moviesList.results.map((movie: any) => (
-          <Card className="my-0 " key={movie.id} props={movie} />
-        ))
+        <>
+          <div className="flex flex-row gap-x-10 gap-y-5 max-w-full flex-wrap justify-center sm:gap-x-5">
+            {moviesList.results.map((movie: any) => (
+              <Card className="my-0 " key={movie.id} props={movie} />
+            ))}
+          </div>
+          <Pagination totalPages={maxPages} startingPage={1} />
+        </>
       ) : (
         <div className="text-center container mx-auto">
           <h1 className="text-3xl mt-32 font-bold">

@@ -24,7 +24,7 @@ export default async function Highlight() {
       <img className="sm:hidden absolute -z-10 w-full" src={imageUrl} />
       <div className="flex flex-col justify-between gap-10 p-5 sm:p-10 min-h-full">
         <a className="self-end" href="/">
-          <StarIcon className="text-white w-10" />
+          <StarIcon className="text-transparent w-10" />
         </a>
         <div className="flex flex-col gap-1" id="highlight-info-ctn">
           <h2 className="text-2xl sm:text-3xl font-bold text-center sm:text-left">
