@@ -1,6 +1,7 @@
 import { StarIcon } from "@heroicons/react/24/outline";
 import { YoutubeIframe } from "./youtubeIframe";
 import { fetchMovies, fetchTrailerByMovieId } from "../utils/data";
+import { tmdb_images_base_url } from "../utils/api_endpoints";
 import Link from "next/link";
 
 export default async function Highlight() {
@@ -8,14 +9,19 @@ export default async function Highlight() {
   const topTrendyMovie = trendingMovies.results[0];
   const trailers = await fetchTrailerByMovieId(topTrendyMovie.id);
   const trailerKey = trailers.results[0].key;
-  // h-96
+
+  const imageUrl = topTrendyMovie.poster_path
+    ? `${tmdb_images_base_url}/w300${topTrendyMovie.poster_path}`
+    : "https://placehold.jp/5d5e65/000000/300x450.png?text=404%20-%20Movie%20does%20not%20have%20an%20image%20yet&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D";
+
   return (
-    <aside className="relative container overflow-hidden gap-48 min-w-full h-30vh sm:h-40vw bg-gradient-to-t from-black to-transparent">
+    <aside className="relative container overflow-hidden gap-48 h-65vh rounded-lg max-w-96 sm:rounded-none sm:min-w-full sm:h-40vw bg-gradient-to-t from-black to-transparent">
       <YoutubeIframe
         isHighlight={true}
-        className="absolute w-full h-full -top-10 sm:-top-36 -z-10 sm:h-56vw overflow-hidden"
+        className="absolute w-full h-full hidden sm:block -top-10 sm:-top-36 -z-10 sm:h-56vw overflow-hidden"
         videoId={trailerKey}
       />
+      <img className="sm:hidden absolute -z-10 w-full" src={imageUrl} />
       <div className="flex flex-col justify-between gap-10 p-5 sm:p-10 min-h-full">
         <a className="self-end" href="/">
           <StarIcon className="text-white w-10" />

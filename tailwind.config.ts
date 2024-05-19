@@ -13,6 +13,7 @@ const config: Config = {
         "56vw": "56vw",
         "40vw": "40vw",
         "30vh": "30vh",
+        "65vh": "65vh",
         "150full": "150vh",
       },
       width: {
