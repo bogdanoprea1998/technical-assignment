@@ -1,7 +1,7 @@
 import Category from "./components/category";
 import Highlight from "./components/highlight";
 
-export default function Home() {
+export default function Page() {
   return (
     <main className="flex flex-col items-center justify-between">
       <Highlight />

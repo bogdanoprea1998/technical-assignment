@@ -40,3 +40,12 @@ export const fetchTrailerByMovieId = async (movieId: string) => {
 
   return response;
 };
+
+export const fetchMoviesByQuery = async (query: string, page: number) => {
+  const url = `${tmdb_base_url}/search/movie?query=${query}&page=${page.toString()}&include_adult=false&language=en&api_key=${api_key}`;
+  const response = await fetch(url, getOptions)
+    .then((res) => res.json())
+    .catch((err) => console.error("error: " + err));
+
+  return response;
+};

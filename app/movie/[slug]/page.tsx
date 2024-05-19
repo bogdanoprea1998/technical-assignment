@@ -3,13 +3,13 @@ import { fetchTrailerByMovieId } from "@/app/utils/data";
 import { YoutubeIframe } from "@/app/components/youtubeIframe";
 import { tmdb_images_base_url } from "@/app/utils/api_endpoints";
 
-export default async function Movie({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const movieDetails = await fetchMovieById(params.slug);
   const trailers = await fetchTrailerByMovieId(params.slug);
 
   const { genres, release_date, title, vote_average, poster_path, overview } =
     movieDetails;
-  const trailerKey = trailers.results[0].key;
+  const trailerKey = trailers?.results[0]?.key;
   const imageUrl = `${tmdb_images_base_url}/w300${poster_path}`;
 
   return (
