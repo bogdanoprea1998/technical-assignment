@@ -2,7 +2,7 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
 export default function SearchBar({
@@ -52,28 +52,26 @@ export default function SearchBar({
   };
 
   return (
-    <Suspense>
-      <div className={`container relative`}>
-        <label htmlFor="search" className="sr-only">
-          Search
-        </label>
-        <input
-          className={`${className} `}
-          placeholder={placeholder}
-          onChange={(e) => {
-            handleSearch(e.target.value);
+    <div className={`container relative`}>
+      <label htmlFor="search" className="sr-only">
+        Search
+      </label>
+      <input
+        className={`${className} `}
+        placeholder={placeholder}
+        onChange={(e) => {
+          handleSearch(e.target.value);
+        }}
+        value={input}
+      />
+      {hasSearchParams && (
+        <XMarkIcon
+          className="absolute text-black sm:text-white w-10 sm:w-7 right-2 top-1 "
+          onClick={() => {
+            clearSearch();
           }}
-          value={input}
         />
-        {hasSearchParams && (
-          <XMarkIcon
-            className="absolute text-black sm:text-white w-10 sm:w-7 right-2 top-1 "
-            onClick={() => {
-              clearSearch();
-            }}
-          />
-        )}
-      </div>
-    </Suspense>
+      )}
+    </div>
   );
 }
