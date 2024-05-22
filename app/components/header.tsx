@@ -39,8 +39,8 @@ export default function Header() {
             <MagnifyingGlassIcon className="text-white w-7" />
           </Link>
         )}
-        <Link href="/">Login</Link>
-        <Link href="/">Register</Link>
+        <Link href="/login">Login</Link>
+        <Link href="/register">Register</Link>
       </div>
     </header>
   );

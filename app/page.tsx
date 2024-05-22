@@ -2,7 +2,7 @@ import Category from "./components/category";
 import Highlight from "./components/highlight";
 import MovieGrid from "./components/moviegrid";
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams?: { page?: string };
