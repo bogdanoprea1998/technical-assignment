@@ -6,10 +6,16 @@ import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import SearchBar from "./searchbar";
 
 export default function Header() {
   const isSearchPage = "/search" === usePathname();
+  const isLoggedIn = useSession().status === "authenticated";
+
+  const handleClick = () => {
+    signOut();
+  };
 
   return (
     <header className="flex justify-between items-center container mx-auto p-4 sm:py-5">
@@ -39,8 +45,17 @@ export default function Header() {
             <MagnifyingGlassIcon className="text-white w-7" />
           </Link>
         )}
-        <Link href="/">Login</Link>
-        <Link href="/">Register</Link>
+        {isLoggedIn ? (
+          <>
+            <Link href="/favorites">Favorites</Link>
+            <button onClick={handleClick}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link href="/login">Login</Link>
+            <Link href="/register">Register</Link>
+          </>
+        )}
       </div>
     </header>
   );
