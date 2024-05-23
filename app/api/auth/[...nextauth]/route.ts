@@ -3,7 +3,7 @@ import { Account, User as AuthUser } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { getUserFromDb } from "@/_actions/userAction";
 
-export const authOptions: any = {
+const authOptions: any = {
   providers: [
     Credentials({
       id: "credentials",
@@ -23,5 +23,5 @@ export const authOptions: any = {
   ],
 };
 
-export const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

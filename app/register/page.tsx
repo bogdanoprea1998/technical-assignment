@@ -57,7 +57,7 @@ export default function Page() {
       }
       if (res.status === 200) {
         setError("");
-        router.push("/login");
+        router.push("/register/success");
       }
     } catch (error: any) {
       setError(
