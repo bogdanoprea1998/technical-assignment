@@ -23,6 +23,7 @@ export default function Input({
         type={type}
         placeholder={placeholder}
         name={name}
+        required
       />
     </div>
   );
