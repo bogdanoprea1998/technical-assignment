@@ -60,6 +60,7 @@ export default function SearchBar({
           handleSearch(e.target.value);
         }}
         value={input}
+        name="search"
       />
       {hasSearchParams && (
         <XMarkIcon

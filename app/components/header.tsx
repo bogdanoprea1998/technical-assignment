@@ -11,6 +11,7 @@ import SearchBar from "./searchbar";
 
 export default function Header() {
   const isSearchPage = "/search" === usePathname();
+  const isNotHomePage = "/" !== usePathname();
   const isLoggedIn = useSession().status === "authenticated";
 
   const handleClick = () => {
@@ -19,7 +20,7 @@ export default function Header() {
 
   return (
     <header className="flex justify-between items-center container mx-auto p-4 sm:py-5">
-      {isSearchPage ? (
+      {isNotHomePage ? (
         <Link href="/">
           <ChevronLeftIcon className="text-white w-10" />
         </Link>
