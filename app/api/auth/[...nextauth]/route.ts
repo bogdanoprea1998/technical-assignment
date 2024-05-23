@@ -3,6 +3,8 @@ import { Account, User as AuthUser } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { getUserFromDb } from "@/_actions/userAction";
 
+const nextAuthSecret = process.env.NEXTAUTH_SECRET;
+
 const authOptions: any = {
   providers: [
     Credentials({
@@ -21,6 +23,7 @@ const authOptions: any = {
       },
     }),
   ],
+  secret: nextAuthSecret,
 };
 
 const handler = NextAuth(authOptions);
