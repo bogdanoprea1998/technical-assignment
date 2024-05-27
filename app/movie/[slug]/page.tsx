@@ -1,21 +1,39 @@
+import { getServerSession } from "next-auth";
+
+import { getFavorites } from "@/_actions/userAction";
 import { fetchMovieById } from "@/app/utils/data";
 import { fetchTrailerByMovieId } from "@/app/utils/data";
-import { YoutubeIframe } from "@/app/components/youtubeIframe";
+import FavoritesButton from "@/app/components/favoritesButton";
+import YoutubeIframe from "@/app/components/youtubeIframe";
 import { tmdb_images_base_url } from "@/app/utils/api_endpoints";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const movieDetails = await fetchMovieById(params.slug);
   const trailers = await fetchTrailerByMovieId(params.slug);
-
   const { genres, release_date, title, vote_average, poster_path, overview } =
     movieDetails;
   const trailerKey = trailers?.results[0]?.key;
   const imageUrl = `${tmdb_images_base_url}/w300${poster_path}`;
 
+  const userEmail = (await getServerSession())?.user?.email;
+  const userFavorites = userEmail ? await getFavorites(userEmail) : [];
+  const isFavorite = Boolean(
+    userFavorites.find(
+      (element: any) => Number(element.tmdb_id) === movieDetails.id
+    )
+  );
+
   return (
     <main className="flex flex-col items-center justify-between container sm:mx-auto sm:p-4">
       <section className="flex flex-col sm:flex-row sm:justify-between min-w-full">
-        <img src={imageUrl} alt={title} />
+        <div className="relative">
+          <FavoritesButton
+            className="absolute w-14 top-0 right-0 m-3 sm:w-10 sm:m-1"
+            props={movieDetails}
+            isFavorite={isFavorite}
+          />
+          <img className="w-full" src={imageUrl} alt={title} />
+        </div>
         <div className="flex flex-col py-4 px-3 sm:px-0 gap-2 sm:py-0">
           <h1 className="text-2xl sm:text-4xl font-bold">{title}</h1>
           <div className="inline-flex justify-between">

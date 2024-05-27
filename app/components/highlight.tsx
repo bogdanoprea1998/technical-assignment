@@ -1,12 +1,23 @@
 import { StarIcon } from "@heroicons/react/24/outline";
-import { YoutubeIframe } from "./youtubeIframe";
+import YoutubeIframe from "./youtubeIframe";
+import FavoritesButton from "./favoritesButton";
+import { Suspense } from "react";
 import { fetchMovies, fetchTrailerByMovieId } from "../utils/data";
 import { tmdb_images_base_url } from "../utils/api_endpoints";
 import Link from "next/link";
 
-export default async function Highlight() {
+export default async function Highlight({
+  userFavorites,
+}: {
+  userFavorites?: any;
+}) {
   const trendingMovies = await fetchMovies(1);
   const topTrendyMovie = trendingMovies.results[0];
+  const isTrendyFavorite = Boolean(
+    userFavorites.find(
+      (movie: any) => Number(movie.tmdb_id) === topTrendyMovie.id
+    )
+  );
   const trailers = await fetchTrailerByMovieId(topTrendyMovie.id);
   const trailerKey = trailers.results[0].key;
 
@@ -16,6 +27,11 @@ export default async function Highlight() {
 
   return (
     <aside className="relative container overflow-hidden gap-48 h-65vh rounded-lg max-w-96 sm:rounded-none sm:min-w-full sm:h-40vw bg-gradient-to-t from-black to-transparent">
+      <FavoritesButton
+        className="absolute top-0 right-0 w-14 m-3"
+        props={topTrendyMovie}
+        isFavorite={isTrendyFavorite}
+      />
       <YoutubeIframe
         isHighlight={true}
         className="absolute w-full h-full hidden sm:block -top-10 sm:-top-36 -z-10 sm:h-56vw overflow-hidden"

@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import { movieSchema } from "./movieModel";
 
 const userSchema = new Schema(
   {
@@ -13,6 +14,9 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
+    },
+    favorites: {
+      type: [movieSchema],
     },
   },
   { timestamps: true }

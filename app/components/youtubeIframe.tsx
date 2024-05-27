@@ -1,4 +1,4 @@
-export const YoutubeIframe = ({
+const YoutubeIframe = ({
   videoId,
   className = "",
   isHighlight = false,
@@ -23,3 +23,5 @@ export const YoutubeIframe = ({
     </div>
   );
 };
+
+export default YoutubeIframe;
