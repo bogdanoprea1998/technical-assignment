@@ -35,7 +35,7 @@ export default async function MovieGrid({
           );
         })}
       </div>
-      <Pagination totalPages={500} startingPage={1} />
+      <Pagination totalPages={500} startingPage={currentPage} />
     </section>
   );
 }

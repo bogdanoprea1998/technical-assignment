@@ -22,7 +22,7 @@ export default async function Page({
       <MovieGrid
         userFavorites={userFavorites}
         searchParams={searchParams}
-        page={2}
+        page={1}
       />
     </main>
   );

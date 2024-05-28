@@ -2,7 +2,8 @@
 
 import clsx from "clsx";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { generatePagination } from "../utils/utils";
 import Link from "next/link";
 
@@ -15,7 +16,16 @@ export default function Pagination({
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const currentPage = Number(searchParams.get("page")) || Number(startingPage);
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    if (!params.has("page") && currentPage !== 1) {
+      params.set("page", currentPage.toString());
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  }, [searchParams]);
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
