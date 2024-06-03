@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { fetchMoviesByQuery } from "../utils/data";
-import { getServerSession } from "next-auth";
-import { getFavorites } from "@/_actions/userAction";
 import Card from "./card";
 import Pagination from "./pagination";
 
@@ -12,9 +10,6 @@ export default async function SearchResults({
   query: string;
   currentPage: number;
 }) {
-  const userEmail = (await getServerSession())?.user?.email;
-  const userFavorites = userEmail ? await getFavorites(userEmail) : [];
-
   const moviesList = await fetchMoviesByQuery(query, currentPage);
   const hasMovies = moviesList.results.length > 0;
   const maxPages = moviesList.total_pages > 500 ? 500 : moviesList.total_pages;
@@ -23,21 +18,9 @@ export default async function SearchResults({
       {hasMovies ? (
         <>
           <div className="flex flex-row gap-x-10 gap-y-5 max-w-full flex-wrap justify-center sm:gap-x-5">
-            {moviesList.results.map((movie: any) => {
-              const isFavorite = Boolean(
-                userFavorites.find(
-                  (element: any) => Number(element.tmdb_id) === movie.id
-                )
-              );
-              return (
-                <Card
-                  className="my-0"
-                  key={`id:${movie.id}`}
-                  props={movie}
-                  isFavorite={isFavorite}
-                />
-              );
-            })}
+            {moviesList.results.map((movie: any) => (
+              <Card className="my-0" key={`id:${movie.id}`} props={movie} />
+            ))}
           </div>
           <Pagination totalPages={maxPages} startingPage={1} />
         </>

@@ -3,7 +3,8 @@
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useFavorites, useUpdateFavorites } from "../context/favorites.ctx";
 import { useSession } from "next-auth/react";
 import { postMovie } from "@/_actions/movieAction";
 import { updateFavorites, removeFromFavorites } from "@/_actions/userAction";
@@ -11,22 +12,30 @@ import { updateFavorites, removeFromFavorites } from "@/_actions/userAction";
 export default function FavoritesButton({
   className = "",
   props,
-  isFavorite,
 }: {
   className?: string;
   props: any;
-  isFavorite?: boolean;
 }) {
-  const [isLocalFavorite, setIsLocalFavorite] = useState(isFavorite);
+  const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(false);
+
+  const userFavorites = useFavorites();
+  const updateFavoritesCtx = useUpdateFavorites();
 
   const { id, title, poster_path, overview, release_date } = props;
   const { data: session, status } = useSession();
   const userEmail = session?.user?.email;
   const isLoggedIn = status === "authenticated";
 
+  useEffect(() => {
+    const isFavorite = Boolean(
+      userFavorites.find((movie: any) => Number(movie.tmdb_id) === Number(id))
+    );
+    setIsLocalFavorite(isFavorite);
+  }, [userFavorites, updateFavorites]);
+
   const removeFavorite = async () => {
     await removeFromFavorites(userEmail, id);
-    setIsLocalFavorite(!isLocalFavorite);
+    updateFavoritesCtx();
   };
 
   const addToFavorites = async () => {
@@ -38,7 +47,7 @@ export default function FavoritesButton({
       release_date,
     });
     await updateFavorites(userEmail, id);
-    setIsLocalFavorite(!isLocalFavorite);
+    updateFavoritesCtx();
   };
 
   return (

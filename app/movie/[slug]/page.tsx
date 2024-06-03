@@ -1,6 +1,3 @@
-import { getServerSession } from "next-auth";
-
-import { getFavorites } from "@/_actions/userAction";
 import { fetchMovieById } from "@/app/utils/data";
 import { fetchTrailerByMovieId } from "@/app/utils/data";
 import FavoritesButton from "@/app/components/favoritesButton";
@@ -15,14 +12,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const trailerKey = trailers?.results[0]?.key;
   const imageUrl = `${tmdb_images_base_url}/w300${poster_path}`;
 
-  const userEmail = (await getServerSession())?.user?.email;
-  const userFavorites = userEmail ? await getFavorites(userEmail) : [];
-  const isFavorite = Boolean(
-    userFavorites.find(
-      (element: any) => Number(element.tmdb_id) === movieDetails.id
-    )
-  );
-
   return (
     <main className="flex flex-col items-center justify-between container sm:mx-auto sm:p-4">
       <section className="flex flex-col sm:flex-row sm:justify-between min-w-full">
@@ -30,7 +19,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <FavoritesButton
             className="absolute w-14 top-0 right-0 m-3 sm:w-10 sm:m-1"
             props={movieDetails}
-            isFavorite={isFavorite}
           />
           <img className="w-full" src={imageUrl} alt={title} />
         </div>
@@ -58,7 +46,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </section>
-      <section>
+      <section className="w-full">
         <h2 className="text-xl font-bold self-start px-3 sm:px-0 sm:text-3xl sm:pt-5">
           Description:
         </h2>

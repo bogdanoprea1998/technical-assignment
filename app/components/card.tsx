@@ -6,11 +6,9 @@ import FavoritesButton from "./favoritesButton";
 const Card = ({
   className = "",
   props,
-  isFavorite = false,
 }: {
   className?: string;
   props: any;
-  isFavorite?: boolean;
 }) => {
   const { title, id, poster_path, release_date, overview } = props;
   const imageUrl = poster_path
@@ -22,7 +20,6 @@ const Card = ({
       <FavoritesButton
         className={"absolute z-30 w-10 m-1 right-0 top-4"}
         props={props}
-        isFavorite={isFavorite}
       />
       <Link
         href={`/movie/${id}`}

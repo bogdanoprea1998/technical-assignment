@@ -1,23 +1,13 @@
-import { StarIcon } from "@heroicons/react/24/outline";
 import YoutubeIframe from "./youtubeIframe";
 import FavoritesButton from "./favoritesButton";
-import { Suspense } from "react";
 import { fetchMovies, fetchTrailerByMovieId } from "../utils/data";
 import { tmdb_images_base_url } from "../utils/api_endpoints";
 import Link from "next/link";
 
-export default async function Highlight({
-  userFavorites,
-}: {
-  userFavorites?: any;
-}) {
+export default async function Highlight() {
   const trendingMovies = await fetchMovies(1);
   const topTrendyMovie = trendingMovies.results[0];
-  const isTrendyFavorite = Boolean(
-    userFavorites.find(
-      (movie: any) => Number(movie.tmdb_id) === topTrendyMovie.id
-    )
-  );
+
   const trailers = await fetchTrailerByMovieId(topTrendyMovie.id);
   const trailerKey = trailers.results[0].key;
 
@@ -30,7 +20,6 @@ export default async function Highlight({
       <FavoritesButton
         className="absolute top-0 right-0 w-14 m-3"
         props={topTrendyMovie}
-        isFavorite={isTrendyFavorite}
       />
       <YoutubeIframe
         isHighlight={true}
@@ -39,9 +28,7 @@ export default async function Highlight({
       />
       <img className="sm:hidden absolute -z-10 w-full" src={imageUrl} />
       <div className="flex flex-col justify-between gap-10 p-5 sm:p-10 min-h-full">
-        <a className="self-end" href="/">
-          <StarIcon className="text-transparent w-10" />
-        </a>
+        <div className="self-end"></div>
         <div className="flex flex-col gap-1" id="highlight-info-ctn">
           <h2 className="text-2xl sm:text-3xl font-bold text-center sm:text-left">
             {topTrendyMovie.title}

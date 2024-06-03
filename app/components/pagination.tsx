@@ -5,6 +5,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { generatePagination } from "../utils/utils";
+import { useUpdateFavorites } from "../context/favorites.ctx";
 import Link from "next/link";
 
 export default function Pagination({
@@ -18,9 +19,11 @@ export default function Pagination({
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentPage = Number(searchParams.get("page")) || Number(startingPage);
+  const updateFavorites = useUpdateFavorites();
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
+    updateFavorites();
     if (!params.has("page") && currentPage !== 1) {
       params.set("page", currentPage.toString());
       router.replace(`${pathname}?${params.toString()}`);
