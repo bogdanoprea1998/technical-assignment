@@ -2,6 +2,7 @@
 
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
+import { Spinner } from "../skeletons/spinner";
 
 import { useState, useEffect } from "react";
 import { useFavorites, useUpdateFavorites } from "../context/favorites.ctx";
@@ -17,6 +18,7 @@ export default function FavoritesButton({
   props: any;
 }) {
   const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const userFavorites = useFavorites();
   const updateFavoritesCtx = useUpdateFavorites();
@@ -27,18 +29,23 @@ export default function FavoritesButton({
   const isLoggedIn = status === "authenticated";
 
   useEffect(() => {
+    setIsLoading(true);
     const isFavorite = Boolean(
       userFavorites.find((movie: any) => Number(movie.tmdb_id) === Number(id))
     );
     setIsLocalFavorite(isFavorite);
+    setIsLoading(false);
   }, [userFavorites, updateFavorites]);
 
   const removeFavorite = async () => {
+    setIsLoading(true);
     await removeFromFavorites(userEmail, id);
     updateFavoritesCtx();
+    setIsLoading(false);
   };
 
   const addToFavorites = async () => {
+    setIsLoading(true);
     await postMovie({
       tmdb_id: id,
       title,
@@ -48,10 +55,14 @@ export default function FavoritesButton({
     });
     await updateFavorites(userEmail, id);
     updateFavoritesCtx();
+    setIsLoading(false);
   };
 
   return (
-    isLoggedIn && (
+    isLoggedIn &&
+    (isLoading ? (
+      <Spinner className={`${className}`} />
+    ) : (
       <>
         {isLocalFavorite ? (
           <StarIconFilled
@@ -65,6 +76,6 @@ export default function FavoritesButton({
           />
         )}
       </>
-    )
+    ))
   );
 }
