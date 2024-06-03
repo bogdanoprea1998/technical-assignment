@@ -9,7 +9,7 @@ const YoutubeIframe = ({
 }) => {
   const embedUrlBase = `https://www.youtube.com/embed/${videoId}?`;
   const embedUrlFinal = isHighlight
-    ? `${embedUrlBase}autoplay=1&mute=1&controls=0&loop=1&showinfo=0&rel=0`
+    ? `${embedUrlBase}playlist=${videoId}&autoplay=1&mute=1&controls=0&loop=1&showinfo=0&rel=0`
     : `${embedUrlBase}autoplay=0&mute=1`;
   return (
     <div className={`${className}`}>
