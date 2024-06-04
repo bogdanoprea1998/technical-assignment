@@ -4,9 +4,11 @@ import Link from "next/link";
 import FavoritesButton from "./favoritesButton";
 
 const Card = ({
+  elementId,
   className = "",
   props,
 }: {
+  elementId?: string;
   className?: string;
   props: any;
 }) => {
@@ -16,7 +18,7 @@ const Card = ({
     : "https://placehold.jp/5d5e65/000000/300x450.png?text=404%20-%20Movie%20does%20not%20have%20an%20image%20yet&css=%7B%22border-radius%22%3A%2215px%22%2C%22background%22%3A%22%20-webkit-gradient(linear%2C%20left%20top%2C%20left%20bottom%2C%20from(%23666666)%2C%20to(%23cccccc))%22%7D";
 
   return (
-    <div className="relative">
+    <div id={elementId} className="relative">
       <FavoritesButton
         className={"absolute z-30 w-10 m-1 right-0 top-4"}
         props={props}
