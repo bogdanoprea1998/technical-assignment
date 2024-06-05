@@ -1,4 +1,4 @@
-import { fetchMovies } from "../utils/data";
+import { fetchMovies, fetchUpcomingMovies } from "../utils/data";
 import Card from "./card";
 import Carousel from "./carousel";
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
@@ -11,7 +11,7 @@ export default async function Category({
   title: string;
   page: number;
 }) {
-  const moviesList = await fetchMovies(page);
+  const moviesList = await fetchUpcomingMovies(page);
 
   const moviesCardList = moviesList.results;
 

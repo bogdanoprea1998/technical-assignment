@@ -21,6 +21,16 @@ export const fetchMovies = async (page: number) => {
   return response;
 };
 
+export const fetchUpcomingMovies = async (page: number) => {
+  const url = `${tmdb_base_url}/movie/upcoming?api_key=${api_key}&include_adult=false&language=en-US&page=${page}`;
+
+  const response = await fetch(url, getOptions)
+    .then((res) => res.json())
+    .catch((err) => console.error("error: " + err));
+
+  return response;
+};
+
 export const fetchMovieById = async (movieId: string) => {
   const url = `${tmdb_base_url}/movie/${movieId}?api_key=${api_key}&language=en-US`;
 
