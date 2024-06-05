@@ -23,7 +23,7 @@ export default async function Highlight() {
       />
       <YoutubeIframe
         isHighlight={true}
-        className="absolute w-full h-full hidden sm:block -top-10 sm:-top-36 -z-10 sm:h-56vw overflow-hidden"
+        className="absolute w-full h-full hidden sm:block -top-10 sm:-top-16 md:-top-20 xl:-top-40 2xl:-top-48 -z-10 sm:h-56vw overflow-hidden"
         videoId={trailerKey}
       />
       <img className="sm:hidden absolute -z-10 w-full" src={imageUrl} />
